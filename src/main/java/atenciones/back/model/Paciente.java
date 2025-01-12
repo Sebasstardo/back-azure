@@ -16,8 +16,8 @@ public class Paciente {
     @GeneratedValue(strategy = GenerationType.IDENTITY) // Puedes usar otra estrategia según tu base de datos
     @Column(name = "id")
     private Long id;
-    @Column(name = "rut")
-    private String rut;
+    @Column(name = "paciente_rut", unique = true, nullable = false)    
+    private String paciente_rut;
     @Column(name = "nombre")
     private String nombre;
     @Column(name = "apellido")
@@ -30,14 +30,7 @@ public class Paciente {
     @OneToMany(mappedBy = "paciente")
     private List<SenalVital> senalesVitales;
 
-    public String getRut() {
-        return rut;
-    }
-
-    public void setRut(String rut) {
-        this.rut = rut;
-    }
-
+   
     public String getNombre() {
         return nombre;
     }
@@ -84,5 +77,13 @@ public class Paciente {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getPaciente_rut() {
+        return paciente_rut;
+    }
+
+    public void setPaciente_rut(String paciente_rut) {
+        this.paciente_rut = paciente_rut;
     }
 }

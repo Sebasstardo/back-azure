@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import atenciones.back.model.Paciente;
 import atenciones.back.model.SenalVital;
 import atenciones.back.repository.ServiceRepository;
 @Service
@@ -20,8 +21,12 @@ public class SenalVitalService {
     public List<SenalVital> obtenerSenalesVitales() {
         return serviceRepository.findAll();
     }
-    public SenalVital obtenerSenalVitalPorRut(String rut) {
-        return serviceRepository.findByRut(rut);
+    public SenalVital obtenerSenalVitalPorId(Long id) {
+        return serviceRepository.findById(id).orElse(null);
     }
+    public void eliminarSenalVital(Long id) {
+        serviceRepository.deleteById(id);
+    }
+
 
 }

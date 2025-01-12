@@ -26,16 +26,21 @@ public class PacienteService {
     public List<Paciente> obtenerPacientes() {
         return pacienteRepository.findAll();
     }
-    public Paciente obtenerPacientePorRut(String rut) {
-        return pacienteRepository.findByRut(rut);
+    public Optional<Paciente> obtenerPacientePorId(Long id) {
+        return pacienteRepository.findById(id);
     }
+    public void eliminarPaciente(Long id) {
+        pacienteRepository.deleteById(id);
+    }
+        
+    
 
-     public List<SenalVital> obtenerSenalesVitalesPorRut(String rut) {
-        Paciente paciente = pacienteRepository.findByRut(rut);
-        if (paciente != null) {
-            return paciente.getSenalesVitales();
-        }
-        return null; 
-    }
+    //  public List<SenalVital> obtenerSenalesVitalesPorRut(String rut) {
+    //     Paciente paciente = pacienteRepository.findByRut(rut);
+    //     if (paciente != null) {
+    //         return paciente.getSenalesVitales();
+    //     }
+    //     return null; 
+    // }
 
 }

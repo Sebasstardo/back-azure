@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
@@ -45,33 +46,19 @@ public class AtencionController {
         return new ResponseEntity<>(pacientes, HttpStatus.CREATED);
 
     }
-    
+
     @GetMapping("/mostrarPaciente")
     public List<Paciente> mostrarPaciente() {
         return pacienteService.obtenerPacientes();
     }
 
-
-   @GetMapping("/obtenerPorRut/{rut}")
-    public ResponseEntity<Optional<Paciente>> obtenerPacientePorRut(@PathVariable String rut) {
-        Paciente paciente = pacienteService.obtenerPacientePorRut(rut);
-        if (paciente != null) {
-            return new ResponseEntity<>(Optional.of(paciente), HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);  
-        }
+    @GetMapping("/mostrarPaciente/{id}")
+    public Optional<Paciente> mostrarPacientePorId(@PathVariable Long id) {
+        return pacienteService.obtenerPacientePorId(id);
     }
-
-    
-    @GetMapping("/senalesVitales/{rut}")
-    public ResponseEntity<List<SenalVital>> obtenerSenalesVitalesPorRut(@PathVariable String rut) {
-        List<SenalVital> senalesVitales = pacienteService.obtenerSenalesVitalesPorRut(rut);
-        if (senalesVitales != null && !senalesVitales.isEmpty()) {
-            return new ResponseEntity<>(senalesVitales, HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);  
-        }
+     @DeleteMapping("/eliminarPaciente/{id}")
+    public ResponseEntity<Void> eliminarPaciente(@PathVariable Long id) {
+        pacienteService.eliminarPaciente(id);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
-    
-
 }

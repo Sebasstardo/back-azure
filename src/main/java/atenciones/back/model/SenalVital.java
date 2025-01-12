@@ -15,10 +15,9 @@ import jakarta.persistence.SequenceGenerator;
 @Entity
 public class SenalVital {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "carta_seq")
-    @SequenceGenerator(name = "carta_seq", sequenceName = "carta_seq", allocationSize = 1)
-    @Column(name = "id")
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_servicio")
+    private Long id_servicio;
     @Column(name = "temperatura")
     private Double temperatura;
     @Column(name = "pulso")
@@ -33,15 +32,10 @@ public class SenalVital {
     private String pacienteEstado;
 
     @ManyToOne
-    @JoinColumn(name = "paciente_rut", referencedColumnName = "rut")
+    @JoinColumn(name = "id", referencedColumnName = "id")
     private Paciente paciente;
     
-    public Long getId() {
-        return id;
-    }
-    public void setId(Long id) {
-        this.id = id;
-    }
+ 
     public Double getTemperatura() {
         return temperatura;
     }
@@ -78,10 +72,13 @@ public class SenalVital {
     public void setPacienteEstado(String pacienteEstado) {
         this.pacienteEstado = pacienteEstado;
     }
-    public Paciente getPaciente() {
-        return paciente;
-    }
     public void setPaciente(Paciente paciente) {
         this.paciente = paciente;
+    }
+    public Long getId_servicio() {
+        return id_servicio;
+    }
+    public void setId_servicio(Long id_servicio) {
+        this.id_servicio = id_servicio;
     }
 }
