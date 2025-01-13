@@ -11,6 +11,13 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.SequenceGenerator;
+import jakarta.validation.constraints.DecimalMax;
+import jakarta.validation.constraints.DecimalMin;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 
 @Entity
 public class SenalVital {
@@ -18,17 +25,37 @@ public class SenalVital {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_servicio")
     private Long id_servicio;
+
     @Column(name = "temperatura")
+    @NotNull(message = "La temperatura no puede ser nula")
+    @DecimalMin(value = "35.0", message = "La temperatura debe ser mayor o igual a 35.0")
+    @DecimalMax(value = "42.0", message = "La temperatura debe ser menor o igual a 42.0")
     private Double temperatura;
+
     @Column(name = "pulso")
+    @NotNull(message = "El pulso no puede ser nulo")
+    @Min(value = 40, message = "El pulso debe ser al menos 40")
+    @Max(value = 180, message = "El pulso no puede ser mayor a 180")
     private Integer pulso;
+
     @Column(name = "ritmo_respiratorio")
+    @NotNull(message = "El ritmo respiratorio no puede ser nulo")
+    @Min(value = 12, message = "El ritmo respiratorio debe ser al menos 12")
+    @Max(value = 30, message = "El ritmo respiratorio no puede ser mayor a 30")
     private Integer ritmoRespiratorio;
+
     @Column(name = "presion_arterial")
+    @NotNull(message = "La presión arterial no puede ser nula")
+    @Pattern(regexp = "^[0-9]{2,3}/[0-9]{2,3}$", message = "El formato de la presión arterial debe ser válido (ej: 120/80)")
     private String presionArterial;
+
     @Column(name = "comentario")
+    @Size(max = 255, message = "El comentario no puede exceder los 255 caracteres")
     private String comentario;
+
     @Column(name = "paciente_estado")
+    @NotNull(message = "El estado del paciente no puede ser nulo")
+    @Pattern(regexp = "^(Estable|Crítico|En observación)$", message = "El estado debe ser Estable, Crítico o En observación")
     private String pacienteEstado;
 
     @ManyToOne
